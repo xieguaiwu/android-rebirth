@@ -1,0 +1,60 @@
+# CONTEXT_FOR_NEXT_AGENT.md
+
+最后更新: 2026-08-25 02:35
+
+## 项目当前状态
+
+重生 Rebirth —— 独立安卓仓库（com.xieguaiwu.rebirth），v0.10.0，可构建、全部测试绿、可复现实测通过、F-Droid 材料就绪。**独立于 CLI 仓库 github.com/xieguaiwu/rebirth**（Go 核心 vendored 在 `core/`）。
+
+- 仓库: https://github.com/xieguaiwu/android-rebirth（public）
+- APK: arm64-only ~9MB（`./gradlew :app:assembleRelease`，签名需本地 keystore.properties）
+- 测试: 26 Robolectric（MainActivity 冒烟 3 / 协议 12 / 语言 5 / Keystore 6）+ vendored core 全量 Go 测试
+
+## 架构
+
+```
+app/                      Kotlin/Compose 五屏 + CoreProcess 桥 + Keystore
+core/                     vendored Go 引擎（module rebirth）
+  cmd/mobile/             JSON-lines daemon（契约 docs/mobile-protocol.md）
+  internal/game/          Session 步进器 + 创伤动力学 + 双语数据（data/ data_en/）
+  internal/llm/           ChainNarrator 多供应商 failover
+  CORE_SOURCE_COMMIT      源 commit（刷新: bash scripts/sync-core.sh）
+scripts/
+  fetch-go.sh             固定 Go 1.25.10 工具链 + SHA-256 校验
+  build-core.sh           arm64 纯 Go 交叉编译 → app/src/main/jniLibs/
+  verify-reproducible.sh  双构建 unsigned APK SHA-256 比对
+  sync-core.sh            core/ 从 rebirth 仓库同步
+docs/
+  mobile-protocol.md      冻结协议契约 v1（与 rebirth 仓库同文）
+  fdroiddata.yml          fdroiddata 草稿（Repo 指向本仓库）
+fastlane/                 双语元数据（截图是占位，待真机实截）
+```
+
+## 关键事实（勿凭记忆假设）
+
+1. **ABI 只出 arm64-v8a**：Go 1.25 实测 android/amd64、arm、386 全需 cgo → 纯 Go 可复现只剩 arm64。
+2. **可复现性比较 unsigned APK**：签名引入逐构建随机性；`-PunsignedRelease` 开关。
+3. **checkpoint 重放含 checkpoint 岁**（`<=`）：checkpoint 在 N 岁处理完保存，重放必须处理 0..N 岁，否则 N 岁被处理两次。
+4. **resume_session 返回全部重放年份**（`years` 数组）：崩溃丢失的时间线数据只能从这里取回。
+5. **多供应商 LLM**：providers 有序 failover，每 provider 独立熔断（连续 3 败），共享预算 24/局（墓志铭免预算）；全关 = 纯离线（Noop）。
+6. **key 红线**：key 只经 new_session/resume_session 传入进程内存；checkpoint 不含 key；Go/Kotlin 日志双端脱敏（sk-/nvapi-/bearer 正则）。
+7. 双语数据：zh/en 事实键与数字字段零漂移（339 事件脚本验证过）；跨语言 InheritTal 丢失是既定行为。
+8. Go 1.25 官方 + Fedora 工具链行为一致（android/amd64 均需 cgo）。
+
+## 待办
+
+- [ ] **真机验证（P0）**：arm64 真机侧载验证 nativeLibraryDir exec .so（方案 C 最大风险点；失败 → 切 gomobile 方案 A）
+- [ ] 真机冒烟：完整一局、杀进程恢复、飞行模式离线、DeepSeek key 真机叙事
+- [ ] **keystore 离线备份**：~/Desktop/android-projects/rebirth-keystore/（丢失 = 无法更新签名）
+- [ ] fastlane 截图替换真机实截（当前占位）
+- [ ] GitHub Release：上传签名 APK（rebirth-v0.10.0.apk，证书 SHA 05dc50...ae9）
+- [ ] fdroiddata MR：fork gitlab.com/fdroid/fdroiddata → docs/fdroiddata.yml（改名为 metadata/com.xieguiawu.rebirth.yml）
+- [ ] CLI 仓库 rebirth：android/ 子目录已移除（v0.10.0 tag 含旧 android/，历史遗留）
+
+## 知识图谱
+
+- graphify-out/: 本地可 `graphify update .` 重建（已 gitignore）
+
+## 最后更新时间
+
+2026-08-25 02:35
