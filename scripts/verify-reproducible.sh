@@ -27,8 +27,10 @@ build_once() {
     echo "FAIL: build $tag failed"; tail -30 "/tmp/rb-build-$tag.log"; exit 1
   }
   # Guard: the APK must actually contain the Go core (a path regression
-  # once silently produced an app without librebirth_core.so).
-  if ! unzip -l app/build/outputs/apk/release/app-release-unsigned.apk | grep -q 'lib/arm64-v8a/librebirth_core.so'; then
+  # once silently produced an app without librebirth_core.so). No pipe
+  # here: pipefail + grep -q + unzip SIGPIPE would false-negative.
+  unzip -l app/build/outputs/apk/release/app-release-unsigned.apk > "/tmp/rb-apk-$tag.txt" 2>&1 || true
+  if ! grep -q 'lib/arm64-v8a/librebirth_core.so' "/tmp/rb-apk-$tag.txt"; then
     echo "FAIL: APK missing librebirth_core.so"; exit 1
   fi
   find app/build/outputs/apk -name '*.apk' | sort | xargs sha256sum > "/tmp/rb-hash-$tag.txt"
