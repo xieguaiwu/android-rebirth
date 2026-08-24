@@ -12,7 +12,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OUT_DIR="$REPO_ROOT/android/app/src/main/jniLibs"
+OUT_DIR="$REPO_ROOT/app/src/main/jniLibs"
 
 # Ensure a Go toolchain is present: sourcing fetch-go.sh keeps its exports
 # (GOROOT/PATH) in THIS shell. On the F-Droid buildserver (no Go installed)
