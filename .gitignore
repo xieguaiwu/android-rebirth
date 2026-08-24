@@ -20,3 +20,6 @@ captures/
 
 # Go toolchain cache (fetch-go.sh)
 .go-cache/
+
+# Local knowledge graph (rebuild with: graphify update .)
+graphify-out/
