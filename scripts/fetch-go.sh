@@ -9,10 +9,25 @@ set -euo pipefail
 
 VERSION="${1:-1.25.10}"
 TARBALL="go${VERSION}.linux-amd64.tar.gz"
-# SHA-256 of the official release tarball (https://go.dev/dl/). Update when
-# bumping VERSION — a mismatch aborts the build instead of silently using
-# an untrusted toolchain.
-SHA256="${GO_TARBALL_SHA256:-}"
+# SHA-256 of the official release tarball. Source of truth: https://go.dev/dl/?mode=json
+# (verified 2026-09-06 against the official JSON API).
+#
+# The pin is keyed by VERSION: an unknown version has NO hash and therefore
+# aborts rather than silently building an untrusted toolchain. Passing
+# GO_TARBALL_SHA256=... overrides (used when bumping VERSION).
+PINNED_SHA256_1_25_10="42d4f7a32316aa66591eca7e89867256057a4264451aca10570a715b3637ba70"
+case "$VERSION" in
+  1.25.10) PINNED_SHA256="$PINNED_SHA256_1_25_10" ;;
+  *)       PINNED_SHA256="" ;;
+esac
+# Verify by default. Set GO_TARBALL_SHA256 to override; there is no longer a
+# "skip verification" path — an unpinned version without an explicit hash fails.
+SHA256="${GO_TARBALL_SHA256-$PINNED_SHA256}"
+if [ -z "$SHA256" ]; then
+  echo "ERROR: no SHA-256 pinned for Go $VERSION." >&2
+  echo "       Set GO_TARBALL_SHA256=<sha256> (from https://go.dev/dl/?mode=json)." >&2
+  exit 1
+fi
 
 CACHE_DIR="${ANDROID_BUILD_TOP:-$PWD}/.go-cache"
 DEST_DIR="$CACHE_DIR/go-$VERSION"

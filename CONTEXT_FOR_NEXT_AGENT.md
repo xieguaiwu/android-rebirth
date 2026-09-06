@@ -1,6 +1,6 @@
 # CONTEXT_FOR_NEXT_AGENT.md
 
-最后更新: 2026-08-25 02:35
+最后更新: 2026-09-06 12:55
 
 ## 项目当前状态
 
@@ -46,9 +46,18 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 - [ ] **真机验证（P0）**：arm64 真机侧载验证 nativeLibraryDir exec .so（方案 C 最大风险点；失败 → 切 gomobile 方案 A）
 - [ ] 真机冒烟：完整一局、杀进程恢复、飞行模式离线、DeepSeek key 真机叙事
 - [ ] **keystore 离线备份**：~/Desktop/android-projects/rebirth-keystore/（丢失 = 无法更新签名）
-- [ ] fastlane 截图替换真机实截（当前占位）
-- [ ] GitHub Release：上传签名 APK（rebirth-v0.10.0.apk，证书 SHA 05dc50...ae9）
-- [ ] fdroiddata MR：fork gitlab.com/fdroid/fdroiddata → docs/fdroiddata.yml（改名为 metadata/com.xieguiawu.rebirth.yml）
+- [ ] fastlane 截图替换真机实截（当前占位，且只有 1 张）
+- [x] GitHub Release：v0.10.0 已建，资产 `rebirth-v0.10.0.apk`（arm64，9,336,658 B，
+      APK SHA-256 `24aa1ae204aa9d3eccb0ce28758ddc3eb942a2de7634ac2836cea2a36075fd83`，
+      证书 SHA-256 `05dc5079...bc2ae9` 与 docs/fdroiddata.yml 注释里的
+      AllowedAPKSigningKeys 逐位一致）— 2026-09-06
+- [x] scripts/fetch-go.sh 改为 **fail-closed**：Go 1.25.10 tarball SHA-256 已硬编码
+      （`42d4f7a3...37ba70`，双端点交叉核对 go.dev JSON API + dl.google.com .sha256）；
+      未 pin 的版本若无 GO_TARBALL_SHA256 直接 exit 1，不再静默跳过校验 — 2026-09-06
+- [ ] fdroiddata MR：**被 P0 真机验证阻塞**，不要先提。fork gitlab.com/fdroid/fdroiddata
+      → docs/fdroiddata.yml（改名为 metadata/com.xieguiawu.rebirth.yml）
+- [ ] 用户需注册 GitLab 账号（2026-09-06 核查：gitlab.com 查无 xieguaiwu 用户，
+      fdroiddata 无任何相关 MR/issue）——五个 app 全部卡在同一个前置条件
 - [ ] CLI 仓库 rebirth：android/ 子目录已移除（v0.10.0 tag 含旧 android/，历史遗留）
 
 ## 知识图谱
@@ -57,4 +66,4 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 
 ## 最后更新时间
 
-2026-08-25 02:35
+2026-09-06 12:55
