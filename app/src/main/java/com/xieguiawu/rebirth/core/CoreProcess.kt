@@ -143,5 +143,10 @@ class CoreProcess(
             .replace(Regex("""(sk|nvapi|ms|or)-[A-Za-z0-9]{6,}"""), "***")
             .replace(Regex("""(?i)authorization:\s*\S+"""), "authorization: ***")
             .replace(Regex("""(?i)bearer\s+\S+"""), "bearer ***")
+            // JSON form fallback: any "key" field is a provider secret by
+            // protocol (docs/mobile-protocol.md) regardless of prefix, so a
+            // custom provider key without a recognised vendor prefix still
+            // never reaches logcat.
+            .replace(Regex("""(?i)("key"\s*:\s*")([^"]*)(")"""), "$1***$3")
     }
 }

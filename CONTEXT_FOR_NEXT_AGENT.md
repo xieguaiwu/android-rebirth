@@ -1,14 +1,15 @@
 # CONTEXT_FOR_NEXT_AGENT.md
 
-最后更新: 2026-09-06 12:55
+最后更新: 2026-09-09 14:20
 
 ## 项目当前状态
 
-重生 Rebirth —— 独立安卓仓库（com.xieguaiwu.rebirth），v0.10.0，可构建、全部测试绿、可复现实测通过、F-Droid 材料就绪。**独立于 CLI 仓库 github.com/xieguaiwu/rebirth**（Go 核心 vendored 在 `core/`）。
+重生 Rebirth —— 独立安卓仓库（com.xieguaiwu.rebirth），v0.10.0 + 未发布安全/主题批次（见 CHANGELOG Unreleased），可构建、全部测试绿。**独立于 CLI 仓库 github.com/xieguaiwu/rebirth**（Go 核心 vendored 在 `core/`，上游已新 commit 40673d9，下次发版需 bump 0.10.1 + versionCode 1001 + tag + Release）。
 
 - 仓库: https://github.com/xieguaiwu/android-rebirth（public）
 - APK: arm64-only ~9MB（`./gradlew :app:assembleRelease`，签名需本地 keystore.properties）
-- 测试: 26 Robolectric（MainActivity 冒烟 3 / 协议 12 / 语言 5 / Keystore 6）+ vendored core 全量 Go 测试
+- 测试: 27 Robolectric（MainActivity 冒烟 3 / 协议 13 / 语言 5 / Keystore 6）+ vendored core 全量 Go 测试
+- 2026-09-09 安全批：Go 层强制 https（防 custom http:// 明文发 key——manifest 策略不覆盖 Go 网络栈）+ redact 补 JSON key 兜底 + 深色主题恒定化；momus 审查超时死亡（600s 零产出），本批按 §7 降级为自查+测试兜底，**未经独立审查**
 
 ## 架构
 
@@ -43,6 +44,7 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 
 ## 待办
 
+- [ ] **发版 0.10.1**：bump versionCode 1001/versionName 0.10.1 → tag v0.10.1 → GitHub Release（附 SHA-256）→ fastlane changelogs/1001.txt；CHANGELOG Unreleased 段转正
 - [ ] **真机验证（P0）**：arm64 真机侧载验证 nativeLibraryDir exec .so（方案 C 最大风险点；失败 → 切 gomobile 方案 A）
 - [ ] 真机冒烟：完整一局、杀进程恢复、飞行模式离线、DeepSeek key 真机叙事
 - [ ] **keystore 离线备份**：~/Desktop/android-projects/rebirth-keystore/（丢失 = 无法更新签名）
@@ -63,7 +65,8 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 ## 知识图谱
 
 - graphify-out/: 本地可 `graphify update .` 重建（已 gitignore）
+- 最后更新: 2026-09-09（安全批+主题批后）
 
 ## 最后更新时间
 
-2026-09-06 12:55
+2026-09-09 14:20

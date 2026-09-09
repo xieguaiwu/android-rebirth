@@ -1,3 +1,25 @@
+## [Unreleased]
+
+### Security (2026-09-09)
+
+- **HTTPS enforcement for LLM endpoints (Go core)**: `usesCleartextTraffic=false`
+  in the manifest covers only the platform network stack — the Go binary's
+  `http.Client` was unaffected. A custom provider URL with `http://` sent the
+  API key as a cleartext `Authorization` header. `llm.Client.complete` now
+  fails closed on non-https base URLs; loopback http stays allowed for local
+  proxies. Upstream rebirth commit `40673d9`, vendored at `core/`.
+- **Log redaction hardened (Android)**: `CoreProcess.redact` now also masks
+  JSON-form `"key":"..."` fields, so custom provider keys without a vendor
+  prefix (`sk-`/`nvapi-`) can never reach logcat.
+
+### Changed
+
+- **Dark theme is now unconditional**: `RebirthTheme` no longer reads
+  `isSystemInDarkTheme()` (no light palette exists). The terminal/CRT theme
+  renders dark regardless of the OS setting; the XML window background
+  (`Theme.Rebirth` on `android:Theme.Material.NoActionBar`) keeps the launch
+  frame dark, so there is no startup flash in either mode.
+
 ## [0.10.0] - 2026-08-25
 
 ### Added: standalone Android repository

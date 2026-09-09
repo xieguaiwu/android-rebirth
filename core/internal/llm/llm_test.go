@@ -1,6 +1,7 @@
 package llm
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -157,5 +158,26 @@ func TestCustomBaseURLOverride(t *testing.T) {
 	n := NewNarrator(c)
 	if _, ok := n.FateEvent(30, "s"); !ok {
 		t.Fatal("override base URL rejected")
+	}
+}
+
+// A non-loopback http:// endpoint must be refused: the Authorization
+// header (API key) would travel in cleartext. Loopback http stays
+// allowed (local proxies / httptest use it) — exercised by every
+// mockServer test above.
+func TestCompleteRejectsCleartextBaseURL(t *testing.T) {
+	c := &Client{BaseURL: "http://api.example.com/v1", Model: "test", APIKey: "test-key"}
+	if _, err := c.complete(context.Background(), "sys", "user", 10); err == nil ||
+		!strings.Contains(err.Error(), "https") {
+		t.Fatalf("expected https enforcement error, got %v", err)
+	}
+}
+
+// The built-in presets are https; the guard must never reject them.
+func TestPresetBaseURLsAreHTTPS(t *testing.T) {
+	for name, p := range Providers {
+		if !strings.HasPrefix(p.BaseURL, "https://") {
+			t.Errorf("provider %s: base URL %q is not https", name, p.BaseURL)
+		}
 	}
 }

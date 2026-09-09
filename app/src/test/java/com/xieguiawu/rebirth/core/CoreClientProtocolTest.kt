@@ -376,4 +376,23 @@ class CoreClientProtocolTest {
         )
         return caught as T
     }
+
+    /** Logging red line (docs/mobile-protocol.md §4): keys never reach logcat. */
+    @Test
+    fun `redact masks vendor keys and raw JSON key fields`() {
+        assertEquals(
+            "using key *** now",
+            CoreProcess.redact("using key sk-abcd12345678 now"),
+        )
+        // Authorization + Bearer both masked; the key material must be gone.
+        val authLine = CoreProcess.redact("Authorization: Bearer nvapi-abcdef123456")
+        assertFalse(authLine.contains("nvapi"))
+        assertFalse(authLine.contains("abcdef"))
+        // Custom provider keys have no vendor prefix — the JSON field form
+        // must still be masked.
+        assertEquals(
+            "{\"key\":\"***\",\"model\":\"m\"}",
+            CoreProcess.redact("{\"key\":\"gsk_plain_secret_value\",\"model\":\"m\"}"),
+        )
+    }
 }

@@ -1,6 +1,5 @@
 package com.xieguiawu.rebirth.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -92,11 +91,12 @@ private val TerminalTypography = Typography(
 )
 
 @Composable
-fun RebirthTheme(
-    @Suppress("UNUSED_PARAMETER") darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
-) {
-    // The terminal theme is dark-only by design.
+fun RebirthTheme(content: @Composable () -> Unit) {
+    // Forced dark: the terminal/CRT theme is dark-only by design. We
+    // deliberately ignore the system theme (no isSystemInDarkTheme() branch
+    // and no light scheme exists) so the app renders dark regardless of the
+    // OS setting. The XML window background in res/values/themes.xml matches
+    // TerminalBg to keep the launch frame dark too.
     MaterialTheme(
         colorScheme = DarkColors,
         typography = TerminalTypography,

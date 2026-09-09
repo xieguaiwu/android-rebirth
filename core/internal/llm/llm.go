@@ -12,6 +12,7 @@ import (
 	"io"
 	"math"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
@@ -100,6 +101,25 @@ type chatResponse struct {
 func (c *Client) complete(ctx context.Context, system, user string, maxTokens int) (string, error) {
 	if strings.TrimSpace(c.APIKey) == "" {
 		return "", errors.New("llm: empty api key")
+	}
+	// HTTPS enforcement (2026-09-09 self-review P1): the Android manifest pins
+	// usesCleartextTraffic=false, but that policy covers the platform
+	// network stack only — the Go binary's http.Client is unaffected. A
+	// custom --llm-url / provider URL with the http:// scheme would send
+	// the API key as a cleartext Authorization header. Fail closed here so
+	// no configuration path can leak keys over plaintext HTTP; loopback
+	// http stays allowed for local proxies (llama.cpp) and httptest.
+	u, err := url.Parse(strings.TrimRight(c.BaseURL, "/") + "/chat/completions")
+	if err != nil {
+		return "", fmt.Errorf("llm: bad base URL %q: %w", c.BaseURL, err)
+	}
+	if u.Scheme != "https" {
+		host := u.Hostname()
+		loopback := u.Scheme == "http" &&
+			(host == "127.0.0.1" || host == "localhost" || host == "::1")
+		if !loopback {
+			return "", fmt.Errorf("llm: base URL must use https (got %q)", c.BaseURL)
+		}
 	}
 	body, err := json.Marshal(chatRequest{
 		Model:       c.Model,
