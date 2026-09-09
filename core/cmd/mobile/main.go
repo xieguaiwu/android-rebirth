@@ -24,7 +24,7 @@ import (
 	"rebirth/internal/llm"
 )
 
-const version = "0.10.0"
+const version = "0.10.1"
 
 // ---- protocol wire types ----
 

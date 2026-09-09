@@ -1,0 +1,1 @@
+Security + theme release. LLM endpoints now enforce HTTPS in the Go core (a custom http:// URL could send API keys in cleartext; loopback stays allowed). Log redaction also masks JSON "key" fields so custom provider keys never reach logcat. The terminal dark theme is now unconditional (no system-theme branch).
