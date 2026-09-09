@@ -1,15 +1,22 @@
 # CONTEXT_FOR_NEXT_AGENT.md
 
-最后更新: 2026-09-09 14:20
+最后更新: 2026-09-09 14:45
 
 ## 项目当前状态
 
-重生 Rebirth —— 独立安卓仓库（com.xieguaiwu.rebirth），v0.10.0 + 未发布安全/主题批次（见 CHANGELOG Unreleased），可构建、全部测试绿。**独立于 CLI 仓库 github.com/xieguaiwu/rebirth**（Go 核心 vendored 在 `core/`，上游已新 commit 40673d9，下次发版需 bump 0.10.1 + versionCode 1001 + tag + Release）。
+重生 Rebirth —— 独立安卓仓库（com.xieguaiwu.rebirth），**v0.10.1 已发布**，可构建、全部测试绿。**独立于 CLI 仓库 github.com/xieguaiwu/rebirth**（Go 核心 vendored 在 `core/`，同步上游 @ f7ca787）。
 
 - 仓库: https://github.com/xieguaiwu/android-rebirth（public）
-- APK: arm64-only ~9MB（`./gradlew :app:assembleRelease`，签名需本地 keystore.properties）
+- 本机构建: `./gradlew :app:assembleRelease`（签名需本地 keystore.properties）；
+  Go core 变更后 `bash scripts/build-core.sh` + `bash scripts/sync-core.sh`
+- **v0.10.1 已发布（2026-09-09）**：tag + GitHub Release + 资产
+  `rebirth-v0.10.1.apk`（arm64，9,336,802 B）
+  - APK SHA-256 `d9b0b736977c6559fdf9f251534307dbbb8bcec9a751e6a161cf4754f3e4bcd4`
+  - 可复现：双构建 unsigned 一致 `dd0570c0...5a11`（SOURCE_DATE_EPOCH=tag 提交）
+  - 证书 SHA-256 `05dc5079...bc2ae9` 与 fdroiddata AllowedAPKSigningKeys 一致
+  - 上游 rebirth 已 push @ f7ca787（含安全 commit 40673d9），vendored core 同步一致
+- 2026-09-09 安全批：Go 层强制 https（防 custom http:// 明文发 key——manifest 策略不覆盖 Go 网络栈）+ redact 补 JSON key 兜底 + 深色主题恒定化；momus 审查超时死亡（600s 零产出），按 §7 降级为自查+测试兜底，**未经独立审查**
 - 测试: 27 Robolectric（MainActivity 冒烟 3 / 协议 13 / 语言 5 / Keystore 6）+ vendored core 全量 Go 测试
-- 2026-09-09 安全批：Go 层强制 https（防 custom http:// 明文发 key——manifest 策略不覆盖 Go 网络栈）+ redact 补 JSON key 兜底 + 深色主题恒定化；momus 审查超时死亡（600s 零产出），本批按 §7 降级为自查+测试兜底，**未经独立审查**
 
 ## 架构
 
@@ -44,7 +51,6 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 
 ## 待办
 
-- [ ] **发版 0.10.1**：bump versionCode 1001/versionName 0.10.1 → tag v0.10.1 → GitHub Release（附 SHA-256）→ fastlane changelogs/1001.txt；CHANGELOG Unreleased 段转正
 - [ ] **真机验证（P0）**：arm64 真机侧载验证 nativeLibraryDir exec .so（方案 C 最大风险点；失败 → 切 gomobile 方案 A）
 - [ ] 真机冒烟：完整一局、杀进程恢复、飞行模式离线、DeepSeek key 真机叙事
 - [ ] **keystore 离线备份**：~/Desktop/android-projects/rebirth-keystore/（丢失 = 无法更新签名）
@@ -69,4 +75,4 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 
 ## 最后更新时间
 
-2026-09-09 14:20
+2026-09-09 14:45
