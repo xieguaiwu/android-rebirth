@@ -76,6 +76,8 @@ bash scripts/sync-core.sh /path/to/rebirth
 
 ## F-Droid 状态
 
+**已提交 fdroiddata（2026-09-13）**：[MR !48687](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/48687)，等待审核。
+
 已准备提交：fastlane 双语元数据、可复现构建实测通过（双构建 unsigned APK
 哈希一致）、fdroiddata 草稿在 `docs/fdroid/com.xieguiawu.rebirth.yml`
 （已列 v0.10.0 + v0.10.1，类别 Role-Playing Game），提交指引

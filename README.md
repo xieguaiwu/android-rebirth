@@ -98,9 +98,9 @@ v0.10.0 + v0.10.1; category Role-Playing Game), plus
 anti-feature: `NonFreeNet` (optional AI narration). Screenshots:
 real-device capture (2026-09-12).
 
-**Not yet submitted** — no MR exists in `gitlab.com/fdroid/fdroiddata` for
-this app, and none can be opened until the arm64 native-exec path is
-confirmed on a real device (see `CONTEXT_FOR_NEXT_AGENT.md`, P0).
+**Submitted (2026-09-13)** — [fdroiddata MR !48687](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/48687), in review.
+(The fork's CI shows "failed" with zero jobs — a fresh-account
+identity-verification gate, not a metadata problem; `fdroid lint` passes locally.)
 
 Signed release APK: [GitHub Release v0.10.1](https://github.com/xieguaiwu/android-rebirth/releases/tag/v0.10.1)
 (`rebirth-v0.10.1.apk`, arm64-v8a, ~9 MB). Its signer certificate SHA-256

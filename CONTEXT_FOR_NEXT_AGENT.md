@@ -65,11 +65,10 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
 - [x] scripts/fetch-go.sh 改为 **fail-closed**：Go 1.25.10 tarball SHA-256 已硬编码
       （`42d4f7a3...37ba70`，双端点交叉核对 go.dev JSON API + dl.google.com .sha256）；
       未 pin 的版本若无 GO_TARBALL_SHA256 直接 exit 1，不再静默跳过校验 — 2026-09-06
-- [ ] fdroiddata MR：**被 P0 真机验证阻塞**，不要先提。材料已就绪（2026-09-12）：
-      docs/fdroid/{com.xieguiawu.rebirth.yml, SUBMIT_GUIDE.md, fdroiddata-mr-0001.patch}
-      ——yml 已同步 v0.10.1 Build 块；**类别 Games → Role-Playing Game**（官方
-      categories.yml 已无通用 Games）；AutoUpdateMode 去模板（Tags 模式须裸
-      `Version`）。fork gitlab.com/fdroid/fdroiddata → 建 metadata/com.xieguiawu.rebirth.yml
+- [x] fdroiddata MR 已提交：**!48687**（2026-09-13，用户确认真机可用后直提）；fork CI 因
+      新账号身份验证零 job，本地 `fdroid lint`（2.4.5）exit 0。等审核（1-4 周），
+      响应 reviewer 需登录 GitLab 网页
+- [ ] 后续真机冒烟补强（整局/杀进程恢复/离线/LLM 叙事）——不阻塞收录，但发现 bug 要发版修
 - [ ] 用户需注册 GitLab 账号（2026-09-06 核查：gitlab.com 查无 xieguaiwu 用户，
       fdroiddata 无任何相关 MR/issue）——五个 app 全部卡在同一个前置条件
 - [ ] CLI 仓库 rebirth：android/ 子目录已移除（v0.10.0 tag 含旧 android/，历史遗留）
@@ -81,4 +80,4 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
 
 ## 最后更新时间
 
-2026-09-12（F-Droid 材料补全：yml 同步 v0.10.1 + 类别/自动更新修正 + SUBMIT_GUIDE + MR patch + 校验脚本 + 真机截图）
+2026-09-13（MR !48687 已提交；fdroid lint 本地通过）
