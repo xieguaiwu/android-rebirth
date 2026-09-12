@@ -15,9 +15,9 @@
 | git tag `v0.10.1` | ✅ 已打并推送 |
 | fastlane 元数据（en-US + zh-CN，changelog 1000/1001） | ✅ |
 | 可复现构建验证（unsigned 双构建） | ✅ `dd0570c0…5a11`（tag v0.10.1） |
-| **P0 真机验证（arm64 exec `.so`）** | ❌ **未做——提交前必须过**（失败则切 gomobile，metadata 构建段需重写） |
-| 真机截图替换 fastlane 占位图 | ❌ 未做（当前仅 1 张占位） |
-| GitLab 账号 | ⏳ 注册中 |
+| **P0 真机验证（arm64 exec `.so`）** | ⏳ 核心风险点已过：真机截图（2026-09-12）显示引擎正常启动并渲染出身/天赋页；完整冒烟（整局/杀进程恢复/离线/LLM 叙事）仍待 |
+| 真机截图替换 fastlane 占位图 | ✅ 已换（2026-09-12，1 张） |
+| GitLab 账号 | ✅ 已注册（2026-09-12） |
 
 ## 已就绪的文件
 
@@ -171,8 +171,8 @@ of traumatic memory.
 
 ## 提交前自检清单
 
-- [ ] **P0 真机验证通过**（arm64 侧载，`nativeLibraryDir` 下 exec `.so` 成功）
-- [ ] 真机截图替换 `fastlane/metadata/android/{en-US,zh-CN}/images/phoneScreenshots/`
+- [ ] **完整真机冒烟**（整局、杀进程恢复、飞行模式离线；exec `.so` 已由真机截图证实可用）
+- [x] 真机截图替换 `fastlane/metadata/android/{en-US,zh-CN}/images/phoneScreenshots/`（2026-09-12）
 - [ ] `git ls-remote --tags origin` 含 v0.10.0 / v0.10.1
 - [ ] `bash scripts/validate-fdroid-metadata.sh docs/fdroid/com.xieguiawu.rebirth.yml` 通过
 - [ ] MR 描述里的可复现哈希与 `scripts/verify-reproducible.sh` 最新读数一致

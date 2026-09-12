@@ -17,6 +17,13 @@ version.
 墓志铭：一生至此。
 ```
 
+## Screenshot
+
+Real-device capture (2026-09-12) — character creation (birth backgrounds
++ talent picks):
+
+![Rebirth character creation](docs/screenshots/character-select.png)
+
 ## Features
 
 - **The real trauma model**: leaky-integrator memory trace coupled with
@@ -88,8 +95,8 @@ build verified (two clean builds produce identical unsigned APKs),
 fdroiddata metadata at `docs/fdroid/com.xieguiawu.rebirth.yml` (lists
 v0.10.0 + v0.10.1; category Role-Playing Game), plus
 `docs/fdroid/SUBMIT_GUIDE.md` and an apply-ready MR patch. Declared
-anti-feature: `NonFreeNet` (optional AI narration). Screenshots are
-placeholders pending real-device capture.
+anti-feature: `NonFreeNet` (optional AI narration). Screenshots:
+real-device capture (2026-09-12).
 
 **Not yet submitted** — no MR exists in `gitlab.com/fdroid/fdroiddata` for
 this app, and none can be opened until the arm64 native-exec path is

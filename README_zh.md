@@ -14,6 +14,12 @@
 墓志铭：一生至此。
 ```
 
+## 截图
+
+真机实截（2026-09-12）——开局设定（出身 + 天赋选择）：
+
+![Rebirth 开局设定](docs/screenshots/character-select.png)
+
 ## 特性
 
 - **真实的创伤模型**：漏积分器记忆痕迹 + 杏仁核/前额叶耦合；鞍结分岔 + 迟滞
@@ -74,7 +80,7 @@ bash scripts/sync-core.sh /path/to/rebirth
 哈希一致）、fdroiddata 草稿在 `docs/fdroid/com.xieguiawu.rebirth.yml`
 （已列 v0.10.0 + v0.10.1，类别 Role-Playing Game），提交指引
 `docs/fdroid/SUBMIT_GUIDE.md`。已声明反特性：`NonFreeNet`（可选 AI 叙事）。
-截图是占位图，待真机实截替换。
+截图已换真机实截（2026-09-12）。
 
 ## 内容提示
 

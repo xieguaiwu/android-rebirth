@@ -36,7 +36,7 @@ scripts/
 docs/
   mobile-protocol.md      冻结协议契约 v1（与 rebirth 仓库同文）
   fdroid/                 fdroiddata 草稿 + SUBMIT_GUIDE + MR patch（Repo 指向本仓库）
-fastlane/                 双语元数据（截图是占位，待真机实截）
+fastlane/                 双语元数据（真机截图 2026-09-12）
 ```
 
 ## 关键事实（勿凭记忆假设）
@@ -52,10 +52,12 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 
 ## 待办
 
-- [ ] **真机验证（P0）**：arm64 真机侧载验证 nativeLibraryDir exec .so（方案 C 最大风险点；失败 → 切 gomobile 方案 A）
+- [ ] **真机验证（P0）**：核心风险点已过——真机截图（2026-09-12）显示 app 启动且
+      引擎数据正常渲染（出身/天赋页 = exec .so 工作）；完整冒烟（整局/杀进程恢复/
+      飞行模式离线/DeepSeek key 叙事）仍待（失败 → 切 gomobile 方案 A）
 - [ ] 真机冒烟：完整一局、杀进程恢复、飞行模式离线、DeepSeek key 真机叙事
 - [ ] **keystore 离线备份**：~/Desktop/android-projects/rebirth-keystore/（丢失 = 无法更新签名）
-- [ ] fastlane 截图替换真机实截（当前占位，且只有 1 张）
+- [x] fastlane 截图已换真机实截（2026-09-12，1 张；README docs/screenshots/character-select.png 同步）
 - [x] GitHub Release：v0.10.0 已建，资产 `rebirth-v0.10.0.apk`（arm64，9,336,658 B，
       APK SHA-256 `24aa1ae204aa9d3eccb0ce28758ddc3eb942a2de7634ac2836cea2a36075fd83`，
       证书 SHA-256 `05dc5079...bc2ae9` 与 docs/fdroiddata.yml 注释里的
@@ -79,4 +81,4 @@ fastlane/                 双语元数据（截图是占位，待真机实截）
 
 ## 最后更新时间
 
-2026-09-12（F-Droid 材料补全：yml 同步 v0.10.1 + 类别/自动更新修正 + SUBMIT_GUIDE + MR patch + 校验脚本）
+2026-09-12（F-Droid 材料补全：yml 同步 v0.10.1 + 类别/自动更新修正 + SUBMIT_GUIDE + MR patch + 校验脚本 + 真机截图）
