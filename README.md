@@ -85,19 +85,21 @@ bash scripts/sync-core.sh /path/to/rebirth
 
 Prepared for submission: fastlane metadata (en-US + zh-CN), reproducible
 build verified (two clean builds produce identical unsigned APKs),
-fdroiddata metadata at `docs/fdroiddata.yml`. Declared anti-feature:
-`NonFreeNet` (optional AI narration). Screenshots are placeholders pending
-real-device capture.
+fdroiddata metadata at `docs/fdroid/com.xieguiawu.rebirth.yml` (lists
+v0.10.0 + v0.10.1; category Role-Playing Game), plus
+`docs/fdroid/SUBMIT_GUIDE.md` and an apply-ready MR patch. Declared
+anti-feature: `NonFreeNet` (optional AI narration). Screenshots are
+placeholders pending real-device capture.
 
 **Not yet submitted** — no MR exists in `gitlab.com/fdroid/fdroiddata` for
 this app, and none can be opened until the arm64 native-exec path is
 confirmed on a real device (see `CONTEXT_FOR_NEXT_AGENT.md`, P0).
 
-Signed release APK: [GitHub Release v0.10.0](https://github.com/xieguaiwu/android-rebirth/releases/tag/v0.10.0)
-(`rebirth-v0.10.0.apk`, arm64-v8a, ~9 MB). Its signer certificate SHA-256
+Signed release APK: [GitHub Release v0.10.1](https://github.com/xieguaiwu/android-rebirth/releases/tag/v0.10.1)
+(`rebirth-v0.10.1.apk`, arm64-v8a, ~9 MB). Its signer certificate SHA-256
 `05dc5079f0b55cce97d564c413c85c249c821435b4cac72d4893a50250bc2ae9` matches
-the commented-out `AllowedAPKSigningKeys` in `docs/fdroiddata.yml`, so the
-Verified-badge route is open.
+the commented-out `AllowedAPKSigningKeys` in
+`docs/fdroid/com.xieguiawu.rebirth.yml`, so the Verified-badge route is open.
 
 `scripts/fetch-go.sh` pins the Go toolchain tarball by SHA-256 and **fails
 closed**: an unpinned version with no `GO_TARBALL_SHA256` aborts instead of

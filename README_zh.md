@@ -71,8 +71,10 @@ bash scripts/sync-core.sh /path/to/rebirth
 ## F-Droid 状态
 
 已准备提交：fastlane 双语元数据、可复现构建实测通过（双构建 unsigned APK
-哈希一致）、fdroiddata 草稿在 `docs/fdroiddata.yml`。已声明反特性：
-`NonFreeNet`（可选 AI 叙事）。截图是占位图，待真机实截替换。
+哈希一致）、fdroiddata 草稿在 `docs/fdroid/com.xieguiawu.rebirth.yml`
+（已列 v0.10.0 + v0.10.1，类别 Role-Playing Game），提交指引
+`docs/fdroid/SUBMIT_GUIDE.md`。已声明反特性：`NonFreeNet`（可选 AI 叙事）。
+截图是占位图，待真机实截替换。
 
 ## 内容提示
 

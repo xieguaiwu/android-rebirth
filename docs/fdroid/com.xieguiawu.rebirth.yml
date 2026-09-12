@@ -1,5 +1,7 @@
+# 类别必须取自官方 config/categories.yml（2026-09 实测：无通用 "Games"，
+# 已拆分为细分游戏类别；本作 = 文字人生模拟 + roguelike 重开循环 → Role-Playing Game）
 Categories:
-  - Games
+  - Role-Playing Game
 License: MIT
 AuthorName: xieguaiwu
 AuthorEmail: xieguaiwu@users.noreply.github.com
@@ -34,12 +36,22 @@ Builds:
     build:
       - bash scripts/build-core.sh
 
+  - versionName: 0.10.1
+    versionCode: 1001
+    commit: v0.10.1
+    gradle:
+      - yes
+    prebuild:
+      - bash scripts/fetch-go.sh
+    build:
+      - bash scripts/build-core.sh
+
 # Verified route (self-signed releases, optional): add after first release
 # Binaries: https://github.com/xieguaiwu/android-rebirth/releases/download/v%v/rebirth-v%v.apk
 # AllowedAPKSigningKeys:
 #   - 05dc5079f0b55cce97d564c413c85c249c821435b4cac72d4893a50250bc2ae9
 
-AutoUpdateMode: Version v%v
+AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 0.10.0
-CurrentVersionCode: 1000
+CurrentVersion: 0.10.1
+CurrentVersionCode: 1001
