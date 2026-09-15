@@ -84,7 +84,8 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
 
 - **reviewer 要求已全部落实**：①MR 描述换 App Inclusion 模板+勾选框，标题改 `New app: Rebirth (com.xieguiawu.rebirth)` ②`commit` 钉全 hash `c0f2a7b52a3a2b632d8026a37c71be8a87c624f9`（tag v0.10.1）③删旧版本 Build（只留 v0.10.1/vc1001）④NonFreeNet 补理由。
 - **上游 CI 两项故障已修（元数据侧，应用无改动）**：①`tools check scripts` 失败 = yml 内联 `Summary:` 违规 → 已删 Summary/Description（fastlane en-US/zh-CN 已承载）②`fdroid build` 94 个扫描错 = prebuild 下载的 Go 工具链落在 `.go-cache/` → 加 `scanignore: - .go-cache`（tarball 有 SHA-256 校验，非预编译代码）。
-- **本地 CI 复刻（fdroidserver git master）**：rewritemeta 无 diff / lint 零警告 / checkupdates --auto 无 diff / tools 六脚本全过（fdroid build 无法本地完整复刻，等上游 CI）。
+- **本地 fdroid build 端到端复刻又抓出第三个雷（已修）**：本仓 Gradle 根 = 仓库根（无 `subdir`），fdroidserver 默认在 `<root>/build/outputs` 找 APK 而实际在 `app/build/outputs/` → 加 `output: app/build/outputs/apk/release/app-release*.apk`。修后 `fdroid build -l` EXIT=0（扫描→Go→gradle 全链）+ 产物 vc1001/0.10.1 + unsigned 无签名块 + fdroid scanner 零发现。
+- **本地 CI 复刻（fdroidserver git master）**：rewritemeta 无 diff / lint 零警告 / checkupdates --auto 无 diff / tools 六脚本全过 / **fdroid build 端到端 EXIT=0** / scanner 零发现。
 - fork CI 红叉 = GitLab 身份验证门禁（零 job），已请求 reviewer 从上游重触发。
 - 元数据副本 docs/fdroid/*.yml 已同步规范形；validate 脚本已支持全 hash commit。
 

@@ -24,6 +24,7 @@ Builds:
     commit: c0f2a7b52a3a2b632d8026a37c71be8a87c624f9
     gradle:
       - yes
+    output: app/build/outputs/apk/release/app-release*.apk
     prebuild: bash scripts/fetch-go.sh
     scanignore:
       - .go-cache
