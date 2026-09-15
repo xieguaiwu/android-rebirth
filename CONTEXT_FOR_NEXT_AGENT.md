@@ -72,8 +72,7 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
       新账号身份验证零 job，本地 `fdroid lint`（2.4.5）exit 0。等审核（1-4 周），
       响应 reviewer 需登录 GitLab 网页
 - [ ] 后续真机冒烟补强（整局/杀进程恢复/离线/LLM 叙事）——不阻塞收录，但发现 bug 要发版修
-- [ ] 用户需注册 GitLab 账号（2026-09-06 核查：gitlab.com 查无 xieguaiwu 用户，
-      fdroiddata 无任何相关 MR/issue）——五个 app 全部卡在同一个前置条件
+- [x] 用户需注册 GitLab 账号 —— 已完成（xieguaiwu，2026-09-12；五个 app 的 MR 已全部提交，见 FDROID_PORTFOLIO.md）
 - [ ] CLI 仓库 rebirth：android/ 子目录已移除（v0.10.0 tag 含旧 android/，历史遗留）
 
 ## 知识图谱
@@ -81,6 +80,14 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
 - graphify-out/: 本地可 `graphify update .` 重建（已 gitignore）
 - 最后更新: 2026-09-09（安全批+主题批后）
 
+## 2026-09-15 F-Droid 审核第一轮响应（reviewer: linsui）
+
+- **reviewer 要求已全部落实**：①MR 描述换 App Inclusion 模板+勾选框，标题改 `New app: Rebirth (com.xieguiawu.rebirth)` ②`commit` 钉全 hash `c0f2a7b52a3a2b632d8026a37c71be8a87c624f9`（tag v0.10.1）③删旧版本 Build（只留 v0.10.1/vc1001）④NonFreeNet 补理由。
+- **上游 CI 两项故障已修（元数据侧，应用无改动）**：①`tools check scripts` 失败 = yml 内联 `Summary:` 违规 → 已删 Summary/Description（fastlane en-US/zh-CN 已承载）②`fdroid build` 94 个扫描错 = prebuild 下载的 Go 工具链落在 `.go-cache/` → 加 `scanignore: - .go-cache`（tarball 有 SHA-256 校验，非预编译代码）。
+- **本地 CI 复刻（fdroidserver git master）**：rewritemeta 无 diff / lint 零警告 / checkupdates --auto 无 diff / tools 六脚本全过（fdroid build 无法本地完整复刻，等上游 CI）。
+- fork CI 红叉 = GitLab 身份验证门禁（零 job），已请求 reviewer 从上游重触发。
+- 元数据副本 docs/fdroid/*.yml 已同步规范形；validate 脚本已支持全 hash commit。
+
 ## 最后更新时间
 
-2026-09-13（MR !48687 已提交；fdroid lint 本地通过）
+2026-09-15（审核第一轮：四项要求落实 + Summary 外置 + scanignore Go 工具链缓存）

@@ -1,5 +1,8 @@
-# 类别必须取自官方 config/categories.yml（2026-09 实测：无通用 "Games"，
-# 已拆分为细分游戏类别；本作 = 文字人生模拟 + roguelike 重开循环 → Role-Playing Game）
+AntiFeatures:
+  NonFreeNet:
+    en-US: Optional AI narration uses proprietary LLM services (DeepSeek, 
+      OpenRouter or any OpenAI-compatible endpoint). It is disabled by default 
+      and the game is fully playable offline with zero network requests.
 Categories:
   - Role-Playing Game
 License: MIT
@@ -9,47 +12,22 @@ SourceCode: https://github.com/xieguaiwu/android-rebirth
 IssueTracker: https://github.com/xieguaiwu/android-rebirth/issues
 Changelog: https://github.com/xieguaiwu/android-rebirth/releases
 Donate: https://github.com/sponsors/xieguaiwu
-AutoName: 重生 Rebirth
-Summary: Terminal life-restart simulator with a real trauma model
-Description: |
-  rebirth is a life-restart simulator built on a computational-psychiatry
-  model of traumatic memory (leaky-integrator trace, amygdala/prefrontal
-  coupling, hysteresis). Optional AI narration uses proprietary LLM
-  services (DeepSeek / OpenRouter / any OpenAI-compatible endpoint) and is
-  disabled by default — the game is fully playable offline with zero
-  network requests. Contains mature text themes (trauma, mental illness,
-  sex work, cult abuse), no images.
 
-AntiFeatures:
-  - NonFreeNet
+AutoName: 重生 Rebirth
+
 RepoType: git
 Repo: https://github.com/xieguaiwu/android-rebirth
 
 Builds:
-  - versionName: 0.10.0
-    versionCode: 1000
-    commit: v0.10.0
-    gradle:
-      - yes
-    prebuild:
-      - bash scripts/fetch-go.sh
-    build:
-      - bash scripts/build-core.sh
-
   - versionName: 0.10.1
     versionCode: 1001
-    commit: v0.10.1
+    commit: c0f2a7b52a3a2b632d8026a37c71be8a87c624f9
     gradle:
       - yes
-    prebuild:
-      - bash scripts/fetch-go.sh
-    build:
-      - bash scripts/build-core.sh
-
-# Verified route (self-signed releases, optional): add after first release
-# Binaries: https://github.com/xieguaiwu/android-rebirth/releases/download/v%v/rebirth-v%v.apk
-# AllowedAPKSigningKeys:
-#   - 05dc5079f0b55cce97d564c413c85c249c821435b4cac72d4893a50250bc2ae9
+    prebuild: bash scripts/fetch-go.sh
+    scanignore:
+      - .go-cache
+    build: bash scripts/build-core.sh
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
