@@ -1,34 +1,25 @@
-From 8cee8ac1babcb3af3fab0704d483cb45d3c1f7bb Mon Sep 17 00:00:00 2001
+From 952f39cc0d90c4c2e7bda15d142693c8f7ffe066 Mon Sep 17 00:00:00 2001
 From: xieguaiwu <xieguaiwu@users.noreply.github.com>
-Date: Sat, 12 Sep 2026 23:06:38 +0800
+Date: Tue, 15 Sep 2026 22:34:49 +0800
 Subject: [PATCH] Add Rebirth (com.xieguiawu.rebirth)
 
-- Android client for the rebirth terminal life-restart simulator
-  (computational-psychiatry trauma model); the deterministic Go engine
-  runs in-app as a child process
-- MIT licensed, text-only, mature themes; fully playable offline
-- NonFreeNet declared (optional AI narration via proprietary LLM services)
-- Reproducible build verified at tag v0.10.1 (unsigned comparison):
-  dd0570c03c51593d85e7fea6a202b8baaad45e54ca7467f13982e9d44d6d5a11
-- Fastlane metadata (en-US / zh-CN) in-repo
-- Category Role-Playing Game (validated against config/categories.yml)
-- Build: pinned Go 1.25.10 toolchain fetched in prebuild (SHA-256 verified),
-  pure-Go arm64 core compiled in build; no NDK, no prebuilt binaries
+MIT licensed; fastlane metadata (en-US / zh-CN); reproducible build verified at the tagged commit.
 ---
- metadata/com.xieguiawu.rebirth.yml | 57 ++++++++++++++++++++++++++++++
- msg.txt                            | 13 +++++++
- 2 files changed, 70 insertions(+)
+ metadata/com.xieguiawu.rebirth.yml | 36 ++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
  create mode 100644 metadata/com.xieguiawu.rebirth.yml
- create mode 100644 msg.txt
 
 diff --git a/metadata/com.xieguiawu.rebirth.yml b/metadata/com.xieguiawu.rebirth.yml
 new file mode 100644
-index 0000000..ee0807d
+index 0000000000..07c9d9c8f1
 --- /dev/null
 +++ b/metadata/com.xieguiawu.rebirth.yml
-@@ -0,0 +1,57 @@
-+# 类别必须取自官方 config/categories.yml（2026-09 实测：无通用 "Games"，
-+# 已拆分为细分游戏类别；本作 = 文字人生模拟 + roguelike 重开循环 → Role-Playing Game）
+@@ -0,0 +1,36 @@
++AntiFeatures:
++  NonFreeNet:
++    en-US: Optional AI narration uses proprietary LLM services (DeepSeek, 
++      OpenRouter or any OpenAI-compatible endpoint). It is disabled by default 
++      and the game is fully playable offline with zero network requests.
 +Categories:
 +  - Role-Playing Game
 +License: MIT
@@ -38,71 +29,28 @@ index 0000000..ee0807d
 +IssueTracker: https://github.com/xieguaiwu/android-rebirth/issues
 +Changelog: https://github.com/xieguaiwu/android-rebirth/releases
 +Donate: https://github.com/sponsors/xieguaiwu
-+AutoName: 重生 Rebirth
-+Summary: Terminal life-restart simulator with a real trauma model
-+Description: |
-+  rebirth is a life-restart simulator built on a computational-psychiatry
-+  model of traumatic memory (leaky-integrator trace, amygdala/prefrontal
-+  coupling, hysteresis). Optional AI narration uses proprietary LLM
-+  services (DeepSeek / OpenRouter / any OpenAI-compatible endpoint) and is
-+  disabled by default — the game is fully playable offline with zero
-+  network requests. Contains mature text themes (trauma, mental illness,
-+  sex work, cult abuse), no images.
 +
-+AntiFeatures:
-+  - NonFreeNet
++AutoName: 重生 Rebirth
++
 +RepoType: git
 +Repo: https://github.com/xieguaiwu/android-rebirth
 +
 +Builds:
-+  - versionName: 0.10.0
-+    versionCode: 1000
-+    commit: v0.10.0
-+    gradle:
-+      - yes
-+    prebuild:
-+      - bash scripts/fetch-go.sh
-+    build:
-+      - bash scripts/build-core.sh
-+
 +  - versionName: 0.10.1
 +    versionCode: 1001
-+    commit: v0.10.1
++    commit: c0f2a7b52a3a2b632d8026a37c71be8a87c624f9
 +    gradle:
 +      - yes
-+    prebuild:
-+      - bash scripts/fetch-go.sh
-+    build:
-+      - bash scripts/build-core.sh
-+
-+# Verified route (self-signed releases, optional): add after first release
-+# Binaries: https://github.com/xieguaiwu/android-rebirth/releases/download/v%v/rebirth-v%v.apk
-+# AllowedAPKSigningKeys:
-+#   - 05dc5079f0b55cce97d564c413c85c249c821435b4cac72d4893a50250bc2ae9
++    output: app/build/outputs/apk/release/app-release*.apk
++    prebuild: bash scripts/fetch-go.sh
++    scanignore:
++      - .go-cache
++    build: bash scripts/build-core.sh
 +
 +AutoUpdateMode: Version
 +UpdateCheckMode: Tags
 +CurrentVersion: 0.10.1
 +CurrentVersionCode: 1001
-diff --git a/msg.txt b/msg.txt
-new file mode 100644
-index 0000000..16bdd0c
---- /dev/null
-+++ b/msg.txt
-@@ -0,0 +1,13 @@
-+Add Rebirth (com.xieguiawu.rebirth)
-+
-+- Android client for the rebirth terminal life-restart simulator
-+  (computational-psychiatry trauma model); the deterministic Go engine
-+  runs in-app as a child process
-+- MIT licensed, text-only, mature themes; fully playable offline
-+- NonFreeNet declared (optional AI narration via proprietary LLM services)
-+- Reproducible build verified at tag v0.10.1 (unsigned comparison):
-+  dd0570c03c51593d85e7fea6a202b8baaad45e54ca7467f13982e9d44d6d5a11
-+- Fastlane metadata (en-US / zh-CN) in-repo
-+- Category Role-Playing Game (validated against config/categories.yml)
-+- Build: pinned Go 1.25.10 toolchain fetched in prebuild (SHA-256 verified),
-+  pure-Go arm64 core compiled in build; no NDK, no prebuilt binaries
 -- 
 2.54.0
 
