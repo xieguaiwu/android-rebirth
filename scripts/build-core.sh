@@ -33,5 +33,12 @@ GOOS=android GOARCH=arm64 CGO_ENABLED=0 GOFLAGS="-trimpath" \
 cd "$REPO_ROOT"
 
 ls -l "$out"
-file "$out"
+# Sanity-check the artifact: ELF magic via coreutils od(1). The F-Droid
+# build server does not ship file(1), which made the build fail here even
+# though the cross-compile itself had succeeded.
+magic="$(od -An -N4 -tx1 "$out" | tr -d ' \n')"
+if [ "$magic" != "7f454c46" ]; then
+  echo "ERROR: $out is not an ELF file" >&2
+  exit 1
+fi
 echo "OK: arm64 core built."

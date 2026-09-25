@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Downloads a pinned Go toolchain (official tarball, SHA-256 verified) for
 # the F-Droid build server, which does not ship Go. Idempotent: caches the
-# tarball under $ANDROID_BUILD_TOP or the caller's current directory.
+# tarball under $ANDROID_BUILD_TOP or the repository root (anchored to this
+# script's location, so the same cache is found regardless of the caller's
+# working directory — the F-Droid metadata runs it from the app/ subdir).
 #
 # Usage: fetch-go.sh [version]   (default 1.25.10 — pin when bumping!)
 # Exports GOROOT and prepends $GOROOT/bin to PATH in the calling shell.
@@ -29,7 +31,10 @@ if [ -z "$SHA256" ]; then
   exit 1
 fi
 
-CACHE_DIR="${ANDROID_BUILD_TOP:-$PWD}/.go-cache"
+# Repository root = parent of this script's directory. Anchoring there
+# (instead of $PWD) keeps one shared cache when invoked from a subdirectory.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CACHE_DIR="${ANDROID_BUILD_TOP:-$(dirname "$SCRIPT_DIR")}/.go-cache"
 DEST_DIR="$CACHE_DIR/go-$VERSION"
 mkdir -p "$CACHE_DIR"
 
