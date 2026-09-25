@@ -89,6 +89,18 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
 - fork CI 红叉 = GitLab 身份验证门禁（零 job），已请求 reviewer 从上游重触发。
 - 元数据副本 docs/fdroid/*.yml 已同步规范形；validate 脚本已支持全 hash commit。
 
+## 2026-09-25 F-Droid 审核第二轮响应（reviewer: linsui）
+
+**背景**：linsui 09-15 二轮意见挂了 10 天（5 MR 全 `waiting-on-response`）。本轮全量响应。
+
+- **Rebirth 结构（reviewer 要求）**：`subdir: app` + 删 `output`；prebuild/build 改 `bash ../scripts/…`（subdir 下 cwd=app/，已从 fdroidserver 源码核实 + 官方 mastodon 例子佐证）。
+- **CI `fdroid build` 红因修复（发 v0.10.2，tag/commit `712c549b…`）**：①构建服务器无 `file(1)` → `build-core.sh` 改 `od(1)` ELF 魔数校验 ②Go 缓存锚定仓库根（`fetch-go.sh` 用脚本位置推导，`subdir` 下 prebuild/build 共享同一缓存，scanignore `.go-cache` 继续有效）③版本 1002/0.10.2 + changelogs 1002（en/zh）+ CHANGELOG 段。
+- **5 app 元数据**：联系邮箱 → `xieguaiwu@163.com`（noreply 被点名）；**在与 CI 完全一致的依赖集下重跑 canonical 化**（关键教训：ruamel.yaml 版本影响折行宽度——CI=Debian 0.18.10，本地 PyPI 0.19.1 会假绿；钉 0.18.10 + fdroidserver master a35fddd 后与 CI 期望逐字一致）。
+- **本地复刻 CI 全绿**：rewritemeta 幂等 / lint / checkupdates（5/5，无改写）/ schema / fastlane / tools 脚本 / **fdroid build 端到端 EXIT=0**（subdir+../scripts 路径全链：扫描→Go→od 校验→app/ 下 gradle→产物 `app-release-unsigned.apk`）。
+- **跨环境可复现性**：fdroid build 产物 SHA-256 与本机 verify-reproducible.sh 读数**逐字节一致**（`047ab7be…bdc6`）。
+- GitHub Release v0.10.2 已发（签名资产 `rebirth-v0.10.2.apk`，证书 `05dc5079…bc2ae9`）。
+- 待办：等 reviewer 重触发上游 CI；真机冒烟仍待。
+
 ## 最后更新时间
 
-2026-09-15（审核第一轮：四项要求落实 + Summary 外置 + scanignore Go 工具链缓存）
+2026-09-25（审核第二轮：subdir 结构 + v0.10.2 构建修复 + 5 app 邮箱/规范形）
