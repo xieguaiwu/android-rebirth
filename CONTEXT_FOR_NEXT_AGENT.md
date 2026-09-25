@@ -99,8 +99,8 @@ fastlane/                 双语元数据（真机截图 2026-09-12）
 - **本地复刻 CI 全绿**：rewritemeta 幂等 / lint / checkupdates（5/5，无改写）/ schema / fastlane / tools 脚本 / **fdroid build 端到端 EXIT=0**（subdir+../scripts 路径全链：扫描→Go→od 校验→app/ 下 gradle→产物 `app-release-unsigned.apk`）。
 - **跨环境可复现性**：fdroid build 产物 SHA-256 与本机 verify-reproducible.sh 读数**逐字节一致**（`047ab7be…bdc6`）。
 - GitHub Release v0.10.2 已发（签名资产 `rebirth-v0.10.2.apk`，证书 `05dc5079…bc2ae9`）。
-- 待办：等 reviewer 重触发上游 CI；真机冒烟仍待。
+- 上游 CI 已重触发且 **45/45 jobs 全绿**（2026-09-25，fdroid/fdroiddata）——`fdroid build`（subdir 布局 + v0.10.2 修复）与 `rewritemeta` 均通过；已回复绿报 + 勾选描述 pipeline 项。等 reviewer 终审/合并；真机冒烟仍待。
 
 ## 最后更新时间
 
-2026-09-25（审核第二轮：subdir 结构 + v0.10.2 构建修复 + 5 app 邮箱/规范形）
+2026-09-25（审核第二轮：subdir 结构 + v0.10.2 构建修复 + 5 app 邮箱/规范形；上游 CI 45/45 全绿）

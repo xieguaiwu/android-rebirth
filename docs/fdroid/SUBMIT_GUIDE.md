@@ -7,6 +7,8 @@
 > 🔄 **审核第一轮已响应**（2026-09-15，reviewer linsui）：MR 描述已换成官方 App Inclusion 模板+勾选框（标题 `New app: Rebirth`）、`commit` 钉全 hash、单 Build、NonFreeNet 补理由、元数据 rewritemeta 规范形；本地已复刻 CI 全套（rewritemeta/lint/checkupdates/tools/**fdroid build 端到端**/scanner）全绿，待维护者重触发上游 CI。本文件的原始提交说明保留作记录；`fdroiddata-mr-0001.patch` 已按当前分支重生成（基于最新上游 master，仍可直接 `git am`）。
 >
 > 🔄 **审核第二轮已响应**（2026-09-25）：①按 reviewer 要求 Rebirth 改 `subdir: app` + 删 `output`（prebuild/build 路径改 `../scripts/…`）②修复 CI `fdroid build` 失败（构建服务器无 `file(1)`）→ 发 v0.10.2（`od(1)` ELF 校验 + Go 缓存锚定仓库根）③5 app 联系邮箱换可达地址 `xieguaiwu@163.com` ④元数据在与 CI 完全一致的依赖集（ruamel.yaml 0.18.10 + fdroidserver master a35fddd）下重新 canonical 化。本地复刻 CI 全套（rewritemeta/lint/checkupdates/tools/schema/fastlane/**fdroid build 端到端**）全绿。
+>
+> ✅ **上游 CI 全绿**（2026-09-25）：45/45 jobs 全部通过（含 `fdroid build` / `fdroid rewritemeta` / `check apk`）；已逐 MR 回复绿报并勾选描述清单。等待终审/合并。
 
 > ⚠️ **提交前先读「前置条件」**——本项目是候选中最特殊的一个：还有 P0 真机
 > 验证未做，且它是唯一带「下载 Go 工具链」prebuild 步骤的构建。
