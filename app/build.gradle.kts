@@ -24,8 +24,8 @@ android {
         applicationId = "com.xieguiawu.rebirth"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1001
-        versionName = "0.10.1"
+        versionCode = 1002
+        versionName = "0.10.2"
     }
 
     signingConfigs {

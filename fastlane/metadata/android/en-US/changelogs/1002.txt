@@ -1,0 +1,1 @@
+F-Droid build fixes. The pinned Go toolchain cache is now anchored to the repository root (prebuild and build share one cache when invoked from a subdirectory), and the core artifact sanity check no longer relies on file(1), which the F-Droid build server does not ship. No user-visible changes.

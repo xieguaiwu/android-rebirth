@@ -1,3 +1,18 @@
+## [0.10.2] - 2026-09-25
+
+### Fixed (F-Droid build-server compatibility)
+
+- **`scripts/build-core.sh`**: the post-build sanity check used `file(1)`,
+  which the F-Droid build server does not ship — the build died after the
+  Go core had already been produced. The check now verifies the ELF magic
+  with `od(1)` (coreutils).
+- **`scripts/fetch-go.sh`**: the pinned-toolchain cache (`.go-cache/`) is
+  anchored to the repository root via this script's location instead of
+  the caller's working directory. `prebuild` and `build` now share one
+  cache when the F-Droid metadata runs them from the `app/` subdir.
+
+No user-visible changes.
+
 ## [0.10.1] - 2026-09-09
 
 ### Security (2026-09-09)
